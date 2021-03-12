@@ -26,7 +26,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
-const helpAuthor = true; // 是否帮助作者助力，false打开通知推送，true关闭通知推送
+const helpAuthor = false; // 是否帮助作者助力，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 if ($.isNode()) {
@@ -281,36 +281,36 @@ function hitGroup() {
   })
 }
 
-function help(shareCode, groupCode, isTask = 0) {
-  return new Promise(resolve => {
-    const body = {
-      "activeType": 2,
-      "groupCode": groupCode,
-      "shareCode": shareCode,
-      "activeId": $.actId,
-    };
-    if (isTask) {
-      console.log(`【抢京豆】做任务获取助力`)
-      body['isTask'] = "1"
-    } else {
-      console.log(`【抢京豆】去助力好友${shareCode}`)
-      body['source'] = "guest"
+//function help(shareCode, groupCode, isTask = 0) {
+  //return new Promise(resolve => {
+    //const body = {
+      //"activeType": 2,
+      //"groupCode": groupCode,
+      //"shareCode": shareCode,
+      //"activeId": $.actId,
+    //};
+   // if (isTask) {
+     // console.log(`【抢京豆】做任务获取助力`)
+     // body['isTask'] = "1"
+   // } else {
+      //console.log(`【抢京豆】去助力好友${shareCode}`)
+      //body['source'] = "guest"
     }
-    $.get(taskGetUrl('signGroupHelp', body), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`【抢京豆】${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            console.log(`【抢京豆】${data.data.helpToast}`)
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
+   // $.get(taskGetUrl('signGroupHelp', body), async (err, resp, data) => {
+      //try {
+        //if (err) {
+         // console.log(`${JSON.stringify(err)}`)
+         // console.log(`【抢京豆】${$.name} API请求失败，请检查网路重试`)
+       // } else {
+         // if (safeGet(data)) {
+           // data = JSON.parse(data);
+           // console.log(`【抢京豆】${data.data.helpToast}`)
+        //  }
+        //}
+     // } catch (e) {
+      //  $.logErr(e, resp)
+      //} finally {
+        //resolve(data);
       }
     })
   })
